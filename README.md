@@ -1,19 +1,18 @@
-## Welcome to GitHub Pages
+## Algorithm Contest Exercise
 
 You can use the [editor on GitHub](https://github.com/ggangliu/algorithm-contest/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Just exercise for myself
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Now i don't need other person to help me.
 
 ```markdown
-Syntax highlighted code block
+Through this book to exercise and improve my c language and c++ language.
 
-# Header 1
-## Header 2
-### Header 3
+# language
+## basic
+### contest
 
 - Bulleted
 - List
@@ -21,17 +20,21 @@ Syntax highlighted code block
 1. Numbered
 2. List
 
-**Bold** and _Italic_ and `Code` text
+**First exercise** 
+_expression formula_ 
+`
+#include <stdio.h>
+int main()
+{
+   printf("%d\n", 1+2);
+   return 0;
+}
+`
 
-[Link](url) and ![Image](src)
 ```
 
+![word cloud](http://mmbiz.qpic.cn/mmbiz_png/FicEEPTLM8icPMjVG690BHynHIAD9QWL9UsAib3Ggia7lEltS2YficeAey2khibMz5pjtrrc4IDNK5dTX2EvWdFxXCQQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+
+[Help you to generate your wordcloud](http://mp.weixin.qq.com/s/J25ZO90euK5TRvu7JzD6VQ/).
+
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ggangliu/algorithm-contest/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
