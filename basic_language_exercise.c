@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#define INF 1000000
+#define LOCAL
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 //Calculate cylinder area
@@ -117,7 +118,6 @@ int check_mod_with_timer(void){
 
 //Get min max and average
 int get_min_max_and_average(void){
-	#define INF 1000000
 	int x = 0, n = 0, min = INF, max = -INF, s = 0;
 	while(scanf("%d", &x) == 1){
 		s += x;
@@ -126,15 +126,45 @@ int get_min_max_and_average(void){
 		n++;
 	}
 	printf("%d %d %.3f\n", min, max, (double)s/n);
+	printf("test redirect to standard i/o\n");
 	return 0;
 }
 
+//using file api implement the above program
+int get_min_max_and_average_by_file(void){
+	FILE *fin, *fout;
+	fin  = fopen("input.data", "rb");
+	fout = fopen("output.data", "wb");
+	
+	int x = 0, n = 0, min = INF, max = -INF, s = 0;
+	while(fscanf(fin, "%d", &x) == 1){
+		s += x;
+		if (x < min) min = x;
+		if (x > max) max = x;
+		n++;
+	}
+	fprintf(fout, "%d %d %.3f\n", min, max, (double)s/n);
+	fprintf(fout, "test redirect to standard i/o\n");
+	
+	fclose(fin);
+	fclose(fout);
+	
+	/* if we want to replace file operation as standard I/O, so just need to replace fin = stdin, fout = stdout
+	   and do not to call fopen() and fclose() 
+	*/
+	
+	return 0;
+} 
+
 int main(int argc, char *argv[]) {
+	#ifdef LOCAL
 	//Redirect to standard i/o
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
+	#endif
 	
-	get_min_max_and_average();
+	//get_min_max_and_average_by_file();
+	//get_min_max_and_average();
 	//check_mod_with_timer();	
 	//get_approximation(); 
 	//get_count_of_to_one();
