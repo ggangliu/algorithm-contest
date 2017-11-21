@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
+
 #define INF 1000000
 #define LOCAL
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
@@ -156,13 +158,36 @@ int get_min_max_and_average_by_file(void){
 	return 0;
 } 
 
+int daffodil(void){
+	int i = 0;
+	for (i = 0; i < 1000; i++){
+		if (i == (pow(i/100,3) + pow(i/10%10,3) + pow(i%10,3))) printf("%d\n", i);
+	}
+	
+}
+
+//inverted triangle
+int inverted_triangle(void){
+	int i, j, n = 0;
+	while((scanf("%d", &n) == 1) && (n <= 20 && n > 0)){
+		int len = 2*(n-1) + 1;
+		for(i = n-1; i >= 0; i--) {   //2n+1
+			for(j = 0; j < (n-1-i); j++) printf(" ");
+			for(j = 0; j < (2*i+1); j++) printf("#");
+			printf("\n");
+		}
+	}
+	
+}
+
 int main(int argc, char *argv[]) {
-	#ifdef LOCAL
+	#ifndef LOCAL
 	//Redirect to standard i/o
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 	#endif
-	
+	inverted_triangle();
+	//daffodil();
 	//get_min_max_and_average_by_file();
 	//get_min_max_and_average();
 	//check_mod_with_timer();	
