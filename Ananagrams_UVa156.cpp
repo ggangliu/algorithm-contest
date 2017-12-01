@@ -22,8 +22,14 @@ string repr(const string& s){
 }
 
 int main(int argc, char** argv) {
-	int n = 0;
+	int n = 3;
+	void* p = &n;
+	float f = 0.0;
 	string s;
+	
+	printf("%p %d %d\n", &n, n, sizeof(void));
+	*((int *)p) = 4;
+	printf("%p %d %d\n", &n, n, sizeof(void));
 	
 	//freopen("input.txt", "r", stdin); // for debug input 
 	
@@ -37,6 +43,6 @@ int main(int argc, char** argv) {
 	sort(ans.begin(), ans.end());
 	
 	for (int i = 0; i < ans.size(); i++) cout << ans[i] << endl;
-	
+ 
 	return 0;
 }

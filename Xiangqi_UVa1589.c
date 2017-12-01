@@ -49,6 +49,10 @@ int is_flying_general_checkmate(int x, int y){
 	return (x <= 10 && General == board[x][y]) ? 1 : 0;
 }
 
+int flying_general_enemy_general(int blk_general_x, int blk_general_y){
+	return is_flying_general_checkmate(blk_general_x, blk_general_y) ? 1 : 0;
+}
+
 int is_chariot_checkmate(int x, int y){
 	int x_up = x, x_down = x, y_left = y, y_right = y;
 	
@@ -72,23 +76,23 @@ int is_cannon_checkmate(int x, int y){
 	int x_up = x, x_down = x, y_left = y, y_right = y;
 	
 	while (--x_up >= 1){
-		if (0 != board[x_up][y] && 0 == cannon_flag) cannon_flag = 1;
-		if (Cannon == board[x_up][y] && 1 == cannon_flag) return 1; 
+		if (1 == cannon_flag && 0 != board[x_up][y]) return Cannon == board[x_up][y] ? 1 : 0; 
+		if (0 == cannon_flag && 0 != board[x_up][y]) cannon_flag = 1;
 	}
 		
 	while (++x_down <= 10){
-		if (0 != board[x_down][y] && 0 == cannon_flag) cannon_flag = 1;
-		if (Cannon == board[x_down][y] && 1 == cannon_flag) return 1; 
+		if (1 == cannon_flag && 0 != board[x_down][y]) return Cannon == board[x_down][y] ? 1 : 0;
+		if (0 == cannon_flag && 0 != board[x_down][y]) cannon_flag = 1;
 	}
 	
 	while (--y_left >=  1){
-		if (0 == board[x][y_left] && 0 == cannon_flag) cannon_flag = 1;
-		if (Cannon == board[x][y_left] && 1 == cannon_flag) return 1;
+		if (1 == cannon_flag && 0 != board[x][y_left]) return Cannon == board[x_down][y_left] ? 1 : 0;
+		if (0 == cannon_flag && 0 != board[x][y_left]) cannon_flag = 1;
 	}
 	
 	while (++y_right <=  9){
-		if (0 == board[x][y_right] && 0 == cannon_flag) cannon_flag = 1;
-		if (Cannon == board[x][y_right] && 1 == cannon_flag) return 1;
+		if (1 == cannon_flag && 0 != board[x][y_right]) return Cannon == board[x_down][y_right] ? 1 : 0;
+		if (0 == cannon_flag && 0 != board[x][y_right]) cannon_flag = 1;
 	}
 	
 	return 0;
@@ -109,26 +113,30 @@ int is_horse_checkmate(int x, int y){
 						   
 int is_check_mate(int blk_general_x, int blk_general_y){
 	//get vailed position
-	int i = 0, j = 0, len_general_table = sizeof(blk_general)/sizeof(blk_general[0]);
+	int i = 0, j = 0, type = 0, len_general_table = sizeof(blk_general)/sizeof(blk_general[0]);
+	
+	if (flying_general_enemy_general(blk_general_x, blk_general_y)) return 0; // check whether check-mate enemy general
+	
 	for (i = 0; i < len_general_table; i++)
 		if (blk_general_x == blk_general[i].cur_pos.x && blk_general_y == blk_general[i].cur_pos.y) break;
 	
 	for (j = 0; j < blk_general[i].maybe_move_num; j++){
+		type = board[blk_general_x][blk_general_y]; board[blk_general_x][blk_general_y] = 0;
 		if (is_flying_general_checkmate(blk_general[i].can_move_pos[j].x, blk_general[i].can_move_pos[j].y)) continue;
 		if (is_chariot_checkmate(blk_general[i].can_move_pos[j].x, blk_general[i].can_move_pos[j].y)) continue;
 		if (is_cannon_checkmate(blk_general[i].can_move_pos[j].x, blk_general[i].can_move_pos[j].y)) continue;
 		if (is_horse_checkmate(blk_general[i].can_move_pos[j].x, blk_general[i].can_move_pos[j].y)) continue;
-		
+		board[blk_general_x][blk_general_y] = type;
 		return 0;
 	}
 	
-	return 1;
+ 	return 1;
 }
 
 int main(int argc, char* argv[]){
 	int blk_general_x = 0, blk_general_y = 0, red_num = 0; // 2 <= red_num <= 7	
 	
-	//freopen("input.txt", "r", stdin);
+	freopen("input.txt", "r", stdin);
 	//freopen("output.txt", "w", stdout);
 	
 	while (scanf("%d %d %d\n", &red_num, &blk_general_x, &blk_general_y)==3 && 0 != red_num){
@@ -141,7 +149,7 @@ int main(int argc, char* argv[]){
 			//printf("[info]%c %d %d\n", type, x, y);
 			board[x][y] = type;	
 		}
-		debug_show_board();
+		//debug_show_board();
 		//check whether is check-mate
 		is_check_mate(blk_general_x, blk_general_y) ? printf("YES\n") : printf("NO\n");
 	}
